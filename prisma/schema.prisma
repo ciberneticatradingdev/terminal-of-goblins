@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Conversation {
+  id          Int       @id @default(autoincrement())
+  title       String?
+  goblinAName String    @map("goblin_a_name")
+  goblinBName String    @map("goblin_b_name")
+  status      String    @default("active")
+  messages    Message[]
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("conversations")
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  conversationId Int          @map("conversation_id")
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  role           String
+  content        String
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  @@map("messages")
+}

@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --goblin-green: #39FF14;
+  --goblin-amber: #FFB000;
+  --goblin-dim: #1a7a05;
+  --goblin-dark: #0a1a02;
+  --goblin-black: #000000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #000;
+  color: var(--goblin-green);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* CRT scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* CRT vignette/curvature effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--goblin-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--goblin-green);
+}
+
+/* Text glow utility */
+.text-glow {
+  text-shadow: 0 0 6px var(--goblin-green), 0 0 12px rgba(57, 255, 20, 0.4);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 6px var(--goblin-amber), 0 0 12px rgba(255, 176, 0, 0.4);
+}
+
+.text-glow-dim {
+  text-shadow: 0 0 4px rgba(57, 255, 20, 0.3);
+}
+
+/* Terminal prompt prefix */
+.prompt::before {
+  content: '> ';
+  color: var(--goblin-green);
+}
+
+/* Cursor blink */
+.cursor::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Message fade-in */
+.message-in {
+  animation: fadeIn 0.35s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Flicker effect on page load */
+.crt-flicker {
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0%   { opacity: 0.97; }
+  5%   { opacity: 0.88; }
+  10%  { opacity: 0.97; }
+  15%  { opacity: 0.93; }
+  20%  { opacity: 0.97; }
+  70%  { opacity: 0.94; }
+  72%  { opacity: 0.97; }
+  77%  { opacity: 0.9; }
+  100% { opacity: 0.97; }
+}
+
+/* Box border glow */
+.border-glow {
+  border-color: var(--goblin-green);
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.3), inset 0 0 8px rgba(57, 255, 20, 0.05);
+}
+
+/* Terminal box */
+.terminal-box {
+  border: 1px solid var(--goblin-dim);
+  background: rgba(0, 0, 0, 0.95);
+  padding: 1rem;
+}
+
+/* Goblin A (green) message */
+.goblin-a-msg {
+  color: var(--goblin-green);
+  border-left: 2px solid var(--goblin-green);
+  padding-left: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+/* Goblin B (amber) message */
+.goblin-b-msg {
+  color: var(--goblin-amber);
+  border-left: 2px solid var(--goblin-amber);
+  padding-left: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+/* Preformatted terminal output */
+pre, code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Warning banner */
+.warning-banner {
+  background: #1a0000;
+  border: 1px solid #FF4500;
+  color: #FF4500;
+  text-shadow: 0 0 6px #FF450066;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+}
+
+/* Status indicators */
+.status-active  { color: var(--goblin-green); }
+.status-completed { color: var(--goblin-dim); }
+.status-error   { color: #FF4500; }
