@@ -1,9 +1,11 @@
 import TerminalHeader from '@/components/TerminalHeader';
 import ConversationList from '@/components/ConversationList';
+import AutoWorker from '@/components/AutoWorker';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-black">
+      <AutoWorker />
       <TerminalHeader />
       <main>
         <ConversationList />
