@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+// Force all pages to be dynamic — no static prerendering
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Terminal of Goblins',
   description: 'Two AI goblins explore an infinite cave system through a terminal. No humans involved.',
